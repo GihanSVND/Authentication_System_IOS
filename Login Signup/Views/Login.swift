@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct Login: View {
     
@@ -85,7 +86,19 @@ struct Login: View {
                         .stroke(lineWidth: 2))
                 
                 Button{
-                    //login
+                    
+                    Auth.auth().signIn(withEmail: email, password: password) {authResult, error in
+                      
+                        if let error = error{
+                            print(error)
+                            return
+                        }
+                        
+                        if let authResult = authResult{
+                            print(authResult.user.uid)
+                        }
+                      
+                    }
                 } label: {
                     Text("Login")
                         .padding()
